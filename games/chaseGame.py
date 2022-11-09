@@ -3,40 +3,43 @@ import os
 import random
 import time
 
-global gridWidth
-gridWidth = 60
-
-global gridLength
-gridLength = 20
-
-global coordsX
-global coordsY
-coordsX = (0)
-coordsY = (0)
-
-global botCoordsX
-global botCoordsY
-botCoordsX = random.randint(10,(gridWidth))
-botCoordsY = random.randint(0,(gridLength))
-
-global gameLose
-gameLose = 'n'
-
-global numOfMoves
-numOfMoves = 0
-
-global powerUpUsed
-powerUpUsed = True
-
-global powerUpCoordsX
-powerUpCoordsX = gridWidth + 10
-
-global powerUpCoordsY
-powerUpCoordsY = gridLength + 10
-
-global speedMultiplier
-speedMultiplier = 1
-
+def everythingRestart():
+  global gridWidth
+  gridWidth = 60
+  
+  global gridLength
+  gridLength = 20
+  
+  global coordsX
+  global coordsY
+  coordsX = (0)
+  coordsY = (0)
+  
+  global botCoordsX
+  global botCoordsY
+  botCoordsX = random.randint(10,(gridWidth))
+  botCoordsY = random.randint(0,(gridLength))
+  
+  global gameLose
+  gameLose = 'n'
+  
+  global numOfMoves
+  numOfMoves = 0
+  
+  global powerUpUsed
+  powerUpUsed = True
+  
+  global powerUpCoordsX
+  powerUpCoordsX = gridWidth + 10
+  
+  global powerUpCoordsY
+  powerUpCoordsY = gridLength + 10
+  
+  global speedMultiplier
+  speedMultiplier = 1
+  
+  global powerUpInUse
+  powerUpInUse = False
 
 def createGameBoard():
   global grid
@@ -49,7 +52,7 @@ def createGameBoard():
       grid[i].append(' ')
 
 def keyMove():
-  global coordsX, coordsY, numOfMoves
+  global coordsX, coordsY, numOfMoves, powerUpInUse, speedMultiplier
   while True:
     key = readkey()
     print(key)
@@ -57,6 +60,8 @@ def keyMove():
       key = "up"
 
       if coordsY == 0:
+        pass
+      elif powerUpInUse == True and coordsY == gridLength + speedMultiplier:
         pass
       else:
         coordsY = coordsY - (1 * speedMultiplier)
@@ -66,6 +71,8 @@ def keyMove():
 
       if coordsY == (gridLength - 1):
         pass
+      elif powerUpInUse == True and coordsY == gridLength - speedMultiplier:
+        pass
       else:
         coordsY = coordsY + (1 * speedMultiplier)
     
@@ -74,6 +81,8 @@ def keyMove():
     
       if coordsX == (gridWidth - 1):
         pass
+      elif powerUpInUse == True and coordsX == gridWidth + speedMultiplier:
+        pass
       else:
         coordsX = coordsX + (1 * speedMultiplier)
     
@@ -81,6 +90,8 @@ def keyMove():
       key = "left"
       
       if coordsX == 0:
+        pass
+      elif powerUpInUse == True and coordsX == gridWidth + speedMultiplier:
         pass
       else:
         coordsX = coordsX - (1 * speedMultiplier)
@@ -93,7 +104,7 @@ def keyMove():
     break
 
 def gameBoardLogic():
-  global coordsX, coordsY, gameLose, botCoordsX, botCoordsY, powerUpCoordsX, powerUpCoordsY, powerUpUsed, numOfMoves, speedMultiplier
+  global coordsX, coordsY, gameLose, botCoordsX, botCoordsY, powerUpCoordsX, powerUpCoordsY, powerUpUsed, numOfMoves, speedMultiplier, powerUpInUse
   createGameBoard()
 
   if powerUpUsed == False:
@@ -104,7 +115,12 @@ def gameBoardLogic():
   grid[coordsX][coordsY] = '*'
   grid[botCoordsX][botCoordsY] = 'X'
   grid[gridWidth - 1][gridLength - 1] = '□'
-    
+
+  if powerUpInUse == True and numOfMoves == 3:
+    powerUpInUse = False
+    speedMultiplier = 1
+    numOfMoves = 0
+  
   if coordsX == botCoordsX and coordsY == botCoordsY:
     os.system('clear')
     print("You got caught!")
@@ -116,13 +132,14 @@ def gameBoardLogic():
     gameLose = 'y' 
   elif coordsX == powerUpCoordsX and coordsY == powerUpCoordsY:
     print("You got a power up!")
-    speedMultiplier = random.randint(1,5)
+    speedMultiplier = random.randint(2,5)
     print(str(speedMultiplier) + "x Speed!")
     powerUpUsed = True
     wait = input("Press ENTER to continue")
     powerUpCoordsX = gridWidth + 10
     powerUpCoordsY = gridLength + 10
     numOfMoves = 0
+    powerUpInUse = True
   
   if numOfMoves >= 10 and random.randint(1,4) == 4 and powerUpUsed == True:
     powerUpCoordsX = random.randint(coordsX, gridWidth)
@@ -149,7 +166,7 @@ def botMovement():
   
   yLockedOn = 'n'
 
-  if random.randint(1,2) == 2:
+  if random.randint(1,3) == 3:
     if coordsY > botCoordsY:
       botCoordsY = botCoordsY + 1
     elif coordsY < botCoordsY:
@@ -170,6 +187,8 @@ def botMovement():
 
 # Running Code
 
+everythingRestart()
+
 while True:
   os.system('clear')
   gameBoardLogic()
@@ -180,5 +199,11 @@ while True:
   gameBoardLogic()
   if gameLose == 'n':
     printGameBoard()
-  else:
-    break
+  elif gameLose == 'y':
+    if input('Play again (y/n)? ') not in ('Y', 'y'):
+      print('Thanks for playing!')
+      break
+    else:
+      gameLose = 'n'
+      everythingRestart()
+      
