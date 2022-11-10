@@ -133,7 +133,9 @@ def gameBoardLogic():
   elif coordsX == powerUpCoordsX and coordsY == powerUpCoordsY:
     print("You got a power up!")
     speedMultiplier = random.randint(2,5)
+    powerUpNumOfMoves = random.randint(1,5)
     print(str(speedMultiplier) + "x Speed!")
+    print("For " + str(powerUpNumOfMoves) + " moves!")
     powerUpUsed = True
     wait = input("Press ENTER to continue")
     powerUpCoordsX = gridWidth + 10
@@ -141,7 +143,7 @@ def gameBoardLogic():
     numOfMoves = 0
     powerUpInUse = True
   
-  if numOfMoves >= 10 and random.randint(1,4) == 4 and powerUpUsed == True:
+  if numOfMoves >= 10 and random.randint(1,3) == 3 and powerUpUsed == True:
     powerUpCoordsX = random.randint(coordsX, gridWidth)
     powerUpCoordsY = random.randint(coordsY, gridLength)
     powerUpUsed = False
@@ -159,7 +161,7 @@ def printGameBoard():
     print("|")
   for i in range(gridWidth):
       print("-", end ='')
-  print("-")
+  print("--")
 
 def botMovement():
   global botCoordsY, botCoordsX, coordsY, coordsX
