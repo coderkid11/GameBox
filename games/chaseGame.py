@@ -3,13 +3,61 @@ import os
 import random
 import time
 
-def everythingRestart():
+def customization():
   global gridWidth
-  gridWidth = 60
-  
   global gridLength
-  gridLength = 20
-  
+  global botMovementRandomness
+  global playerCharacter
+  global botCharacter
+  print('1. Easy 2. Medium 3. Difficult 4. Impossible')
+  difficulty = int(input('Pick a difficulty number -> '))
+
+  if difficulty == 1:
+    gridWidth = 80
+    gridLength = 25
+    botMovementRandomness = 4
+  elif difficulty == 2:
+    gridWidth = 40
+    gridLength = 10
+    botMovementRandomness = 3
+  elif difficulty == 3:
+    gridWidth = 20
+    gridLength = 5
+    botMovementRandomness = 1
+  elif difficulty == 4:
+    gridWidth = 10
+    gridLength = 3
+    botMovementRandomness = 1
+
+  print('1.☆ 2.× 3.♢ 4.♔ 5.♕')
+  playerCharacter = int(input('Pick your character number -> '))
+
+  if playerCharacter == 1:
+    playerCharacter = '☆'
+  elif playerCharacter == 2:
+    playerCharacter = '×'
+  elif playerCharacter == 3:
+    playerCharacter = '♢'
+  elif playerCharacter == 4:
+    playerCharacter = '♔'
+  elif playerCharacter == 5:
+    playerCharacter = '♕'
+
+  print('1.★ 2.╳ 3.♤ 4.♚ 5.♛')
+  botCharacter = int(input('Pick your bot character number -> '))
+
+  if botCharacter == 1:
+    botCharacter = '★'
+  elif botCharacter == 2:
+    botCharacter = '╳'
+  elif botCharacter == 3:
+    botCharacter = '♤'
+  elif botCharacter == 4:
+    botCharacter = '♚'
+  elif botCharacter == 5:
+    botCharacter = '♛'
+
+def everythingRestart():
   global coordsX
   global coordsY
   coordsX = (0)
@@ -17,7 +65,7 @@ def everythingRestart():
   
   global botCoordsX
   global botCoordsY
-  botCoordsX = random.randint(10,(gridWidth))
+  botCoordsX = random.randint(0,(gridWidth))
   botCoordsY = random.randint(0,(gridLength))
   
   global gameLose
@@ -40,6 +88,10 @@ def everythingRestart():
   
   global powerUpInUse
   powerUpInUse = False
+
+  global finishCoordsX, finishCoordsY
+  finishCoordsX = random.randint(5, gridWidth - 1) 
+  finishCoordsY = random.randint(0, gridLength - 1)
 
 def createGameBoard():
   global grid
@@ -104,7 +156,7 @@ def keyMove():
     break
 
 def gameBoardLogic():
-  global coordsX, coordsY, gameLose, botCoordsX, botCoordsY, powerUpCoordsX, powerUpCoordsY, powerUpUsed, numOfMoves, speedMultiplier, powerUpInUse
+  global coordsX, coordsY, gameLose, botCoordsX, botCoordsY, powerUpCoordsX, powerUpCoordsY, powerUpUsed, numOfMoves, speedMultiplier, powerUpInUse, finishCoordsX, finishCoordsY, botMovementRandomness, playerCharacter
   createGameBoard()
 
   if powerUpUsed == False:
@@ -112,11 +164,11 @@ def gameBoardLogic():
   else:
     pass
   
-  grid[coordsX][coordsY] = '*'
-  grid[botCoordsX][botCoordsY] = 'X'
-  grid[gridWidth - 1][gridLength - 1] = '□'
+  grid[coordsX][coordsY] = playerCharacter
+  grid[finishCoordsX][finishCoordsY] = '□'
+  grid[botCoordsX][botCoordsY] = botCharacter
 
-  if powerUpInUse == True and numOfMoves == 3:
+  if powerUpInUse == True and numOfMoves == powerUpNumOfMoves:
     powerUpInUse = False
     speedMultiplier = 1
     numOfMoves = 0
@@ -125,10 +177,9 @@ def gameBoardLogic():
     os.system('clear')
     print("You got caught!")
     gameLose = 'y'
-  elif coordsX == gridWidth - 1 and coordsY == gridLength - 1:
+  elif coordsX == finishCoordsX and coordsY == finishCoordsY:
     os.system('clear')
-    time.sleep(0.5)
-    print("You got to the other side!")
+    print("You got the box without being caught!")
     gameLose = 'y' 
   elif coordsX == powerUpCoordsX and coordsY == powerUpCoordsY:
     print("You got a power up!")
@@ -147,6 +198,11 @@ def gameBoardLogic():
     powerUpCoordsX = random.randint(coordsX, gridWidth)
     powerUpCoordsY = random.randint(coordsY, gridLength)
     powerUpUsed = False
+
+  if powerUpInUse == True and numOfMoves == powerUpNumOfMoves:
+    powerUpInUse = False
+    speedMultiplier = 1
+    numOfMoves = 0
     
 def printGameBoard():
   print("Use the arrow keys to move to the bottom corner or press E to exit:")
@@ -189,6 +245,11 @@ def botMovement():
 
 # Running Code
 
+os.system('clear')
+global difficulty
+global botMovementRandomness
+
+customization()
 everythingRestart()
 
 while True:
@@ -206,6 +267,12 @@ while True:
       print('Thanks for playing!')
       break
     else:
-      gameLose = 'n'
-      everythingRestart()
+      customizationYorN = input('Do you want to customize your settings (y/n)? ')
+      if customizationYorN == ('Y', 'y'):
+        customization()
+        gameLose = 'n'
+        everythingRestart()
+      else:
+        gameLose = 'n'
+        everythingRestart()
       
