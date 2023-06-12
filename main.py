@@ -3,37 +3,49 @@ import os
 import sys
 from asciiArt.asciiLogo import asciiLogo
 from asciiArt.asciiLogo import slowAsciiLogo
-from games.rockPaperScissors import rockPaperScissors
-from games.chaseGame import chaseGame
+from games.rockPaperScissors.rockPaperScissors import rockPaperScissors
+from games.chaseGame.chaseGame import chaseGame
+import getpass
 
 def signup():
-    email = input('Enter email address: ')
-    pwd = input('Enter password: ')
-    conf_pwd = input('Confirm password: ')
+    username = input('Enter username: ')
+    pwd = getpass.getpass('Enter password: ')
+    conf_pwd = getpass.getpass('Confirm password: ')
+    
     if conf_pwd == pwd:
-        with open('credentials.txt', 'w') as f:
-             f.write(email + '\n')
-             f.write(pwd)
-        f.close()
+        with open('credentials.txt', 'a') as file:
+            file.write(username + '\n')
+            file.write(pwd + '\n')
+
+        with open('games/chaseGame/chaseScores.txt', 'a') as file:
+            file.write(username + ',0' + '\n')
+
+        with open('games/rockPaperScissors/rockPaperScissorsScores.txt', 'a') as file:
+            file.write(username + ',0' + '\n')
+      
         print('You have registered successfully!')
     else:
-        print('Password is not same as above! \n')
-    os.system('clear')  
+        print('Password is not the same as above!')
+    
 
 def login():
     global loginSuccesful
-    email = input('Enter email: ')
-    pwd = input('Enter password: ')
-    with open('credentials.txt', 'r') as f:
-        stored_email, stored_pwd = f.read().split('\n')
-    f.close()
-    if email == stored_email and pwd == stored_pwd:
-         print('Logged in Successfully!')
-         loginSuccesful = True
-    else:
-         print('Login failed! \n')
-    wait = input('Press ENTER to continue')
-    os.system('clear')
+    global username
+    username = input('Enter username: ')
+    pwd = getpass.getpass('Enter password: ')
+    
+    with open('credentials.txt', 'r') as file:
+        data = file.readlines()
+        
+        i = 0
+        while i < len(data):
+            if data[i].strip() == username and data[i+1].strip() == pwd:
+                print('Login Successful!')
+                loginSuccesful = True
+                return
+            i += 2
+        
+        print('Login Unsuccessful!')
 
 def loginMenu():
   global loginSuccesful
@@ -50,9 +62,11 @@ def loginMenu():
     
     if ch == 1:
         signup()
+        os.system('clear')
     elif ch == 2:
         login()
         if loginSuccesful == True:
+          os.system('clear')
           break
     elif ch == 3:
         os.system('clear')
@@ -68,6 +82,7 @@ def loginMenu():
         print("Wrong Choice!")
 
 def pickGame():
+  print("Hello " + username + "!")
   print("Pick your game from the list below:")
   
   print("1. Rock Paper Scissors")
