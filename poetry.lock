@@ -125,6 +125,14 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "hashlib"
+version = "20081119"
+description = "Secure hash and message digest algorithm library"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "idna"
 version = "3.4"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -200,6 +208,14 @@ description = "multidict implementation"
 category = "main"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "np"
+version = "1.0.2"
+description = "np = numpy++: numpy with added convenience functionality"
+category = "main"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "numpy"
@@ -385,6 +401,14 @@ doc = ["sphinx-rtd-theme (>=1.0.0)", "sphinx-autodoc-typehints (>=1.18.1)", "sph
 dev = ["build (>=0.7.0)", "pytest-timeout (>=2.1.0)", "pytest (>=7.0.1)"]
 
 [[package]]
+name = "telnet2"
+version = "1.1.4"
+description = "simple telnet module"
+category = "main"
+optional = false
+python-versions = ">=2.7"
+
+[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -486,7 +510,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8.0,<3.9"
-content-hash = "e7727e4298fcf4062532103b15d2b970ba850d3a7c15959d194d937b266bc821"
+content-hash = "a6b64f5a0666b67af92a958de0d12ec35fb0e865d79c769c26544463e8040672"
 
 [metadata.files]
 aiohttp = []
@@ -500,6 +524,7 @@ colorama = []
 debugpy = []
 flask = []
 frozenlist = []
+hashlib = []
 idna = []
 importlib-metadata = []
 itsdangerous = []
@@ -507,6 +532,7 @@ jedi = []
 jinja2 = []
 markupsafe = []
 multidict = []
+np = []
 numpy = []
 packaging = []
 parso = []
@@ -520,6 +546,7 @@ replit = []
 replit-python-lsp-server = []
 requests = []
 rope = []
+telnet2 = []
 toml = []
 tomli = []
 typing-extensions = []

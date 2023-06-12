@@ -1,4 +1,6 @@
 from readchar import readkey
+from asciiArt.asciiLogo import asciiLogo
+from asciiArt.asciiLogo import slowAsciiLogo
 import os
 import random
 import time
@@ -156,7 +158,7 @@ def keyMove():
     break
 
 def gameBoardLogic():
-  global coordsX, coordsY, gameLose, botCoordsX, botCoordsY, powerUpCoordsX, powerUpCoordsY, powerUpUsed, numOfMoves, speedMultiplier, powerUpInUse, finishCoordsX, finishCoordsY, botMovementRandomness, playerCharacter
+  global coordsX, coordsY, gameLose, botCoordsX, botCoordsY, powerUpCoordsX, powerUpCoordsY, powerUpUsed, numOfMoves, speedMultiplier, powerUpInUse, finishCoordsX, finishCoordsY, botMovementRandomness, playerCharacter, powerUpNumOfMoves
   createGameBoard()
 
   if powerUpUsed == False:
@@ -168,11 +170,6 @@ def gameBoardLogic():
   grid[finishCoordsX][finishCoordsY] = '□'
   grid[botCoordsX][botCoordsY] = botCharacter
 
-  if powerUpInUse == True and numOfMoves == powerUpNumOfMoves:
-    powerUpInUse = False
-    speedMultiplier = 1
-    numOfMoves = 0
-  
   if coordsX == botCoordsX and coordsY == botCoordsY:
     os.system('clear')
     print("You got caught!")
@@ -244,35 +241,37 @@ def botMovement():
     pass
 
 # Running Code
-
-os.system('clear')
-global difficulty
-global botMovementRandomness
-
-customization()
-everythingRestart()
-
-while True:
+def chaseGame():
+  global gameLose
   os.system('clear')
-  gameBoardLogic()
-  printGameBoard()
-  keyMove()
-  os.system('clear')
-  botMovement()
-  gameBoardLogic()
-  if gameLose == 'n':
+  global difficulty
+  global botMovementRandomness
+
+  asciiLogo()
+  customization()
+  everythingRestart()
+  
+  while True:
+    os.system('clear')
+    gameBoardLogic()
     printGameBoard()
-  elif gameLose == 'y':
-    if input('Play again (y/n)? ') not in ('Y', 'y'):
-      print('Thanks for playing!')
-      break
-    else:
-      customizationYorN = input('Do you want to customize your settings (y/n)? ')
-      if customizationYorN == ('Y', 'y'):
-        customization()
-        gameLose = 'n'
-        everythingRestart()
+    keyMove()
+    os.system('clear')
+    botMovement()
+    gameBoardLogic()
+    if gameLose == 'n':
+      printGameBoard()
+    elif gameLose == 'y':
+      if input('Play again (y/n)? ') not in ('Y', 'y'):
+        print('Thanks for playing!')
+        break
       else:
-        gameLose = 'n'
-        everythingRestart()
-      
+        customizationYorN = input('Do you want to customize your settings (y/n)? ')
+        if customizationYorN == ('Y', 'y'):
+          customization()
+          gameLose = 'n'
+          everythingRestart()
+        else:
+          gameLose = 'n'
+          everythingRestart()
+        
