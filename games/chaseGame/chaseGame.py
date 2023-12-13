@@ -1,6 +1,7 @@
 from readchar import readkey
 from asciiArt.asciiLogo import asciiLogo
 from asciiArt.asciiLogo import slowAsciiLogo
+from asciiArt.treasureChest import treasureChest
 import os
 import random
 import time
@@ -11,6 +12,10 @@ def customization():
   global botMovementRandomness
   global playerCharacter
   global botCharacter
+
+  #print(f"Hello there, {username}, welcome to the Chase Game!")
+  #print()
+  
   print('1. Easy 2. Medium 3. Difficult 4. Impossible')
   difficulty = int(input('Pick a difficulty number -> '))
 
@@ -175,8 +180,7 @@ def gameBoardLogic():
     print("You got caught!")
     gameLose = 'y'
   elif coordsX == finishCoordsX and coordsY == finishCoordsY:
-    os.system('clear')
-    print("You got the box without being caught!")
+    win()
     gameLose = 'y' 
   elif coordsX == powerUpCoordsX and coordsY == powerUpCoordsY:
     print("You got a power up!")
@@ -240,8 +244,26 @@ def botMovement():
   else:
     pass
 
+def win():
+  os.system('clear')
+  print("You got the treasure without being caught!")
+  print()
+  treasureChest()
+  print()
+
+  #with open('games/chaseGame/chaseScores.txt', 'r') as file:
+   # data = file.readlines()
+  
+  #for i in range(len(data)):
+   # if username in data[i].strip():
+    #  data[i] = username + " " + str(numOfMoves) + "\n"
+     # break
+      
+  #with open('games/chaseGame/chaseScores.txt', 'a') as file:
+   # file.writelines(data)
+
 # Running Code
-def chaseGame():
+def chaseGame(username):
   global gameLose
   os.system('clear')
   global difficulty

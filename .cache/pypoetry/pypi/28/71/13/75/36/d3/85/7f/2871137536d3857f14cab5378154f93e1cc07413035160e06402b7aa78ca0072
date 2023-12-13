@@ -1,0 +1,1 @@
+9999999999{"name": "readchar", "version": "4.0.3", "summary": "Library to easily read single chars and key strokes", "platform": null, "requires_dist": ["setuptools (>=41.0)"], "requires_python": ">=3.6", "files": [], "_cache_version": "1.0.0"}
