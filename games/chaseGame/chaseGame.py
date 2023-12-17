@@ -8,15 +8,15 @@ from asciiArt.asciiLogo import asciiLogo, slowAsciiLogo
 from asciiArt.treasureChest import treasureChest
 
 
-def customization():
+def customization(username):
     global gridWidth
     global gridLength
     global botMovementRandomness
     global playerCharacter
     global botCharacter
 
-    # print(f"Hello there, {username}, welcome to the Chase Game!")
-    # print()
+    print(f"Hello there, {username}, welcome to the Chase Game!")
+    print()
 
     print("1. Easy 2. Medium 3. Difficult 4. Impossible")
     difficulty = int(input("Pick a difficulty number -> "))
@@ -168,7 +168,7 @@ def keyMove():
         break
 
 
-def gameBoardLogic():
+def gameBoardLogic(username):
     global coordsX, coordsY, gameLose, botCoordsX, botCoordsY, powerUpCoordsX, powerUpCoordsY, powerUpUsed, numOfMoves, speedMultiplier, powerUpInUse, finishCoordsX, finishCoordsY, botMovementRandomness, playerCharacter, powerUpNumOfMoves
     createGameBoard()
 
@@ -186,7 +186,7 @@ def gameBoardLogic():
         print("You got caught!")
         gameLose = "y"
     elif coordsX == finishCoordsX and coordsY == finishCoordsY:
-        win()
+        win(username)
         gameLose = "y"
     elif coordsX == powerUpCoordsX and coordsY == powerUpCoordsY:
         print("You got a power up!")
@@ -253,23 +253,27 @@ def botMovement():
         pass
 
 
-def win():
+def win(username):
     os.system("clear")
     print("You got the treasure without being caught!")
     print()
     treasureChest()
     print()
 
-    # with open('games/chaseGame/chaseScores.txt', 'r') as file:
-    # data = file.readlines()
+    with open("games/chaseGame/chaseScores.txt", "r") as file:
+        data = file.readlines()
 
-    # for i in range(len(data)):
-    # if username in data[i].strip():
-    #  data[i] = username + " " + str(numOfMoves) + "\n"
-    # break
+    for i in range(len(data)):
+        if username in data[i].strip():
+            split_data = data[i].split()
+            if len(split_data) >= 2:
+                score_in_file = int(split_data[1])
+                if numOfMoves < score_in_file:
+                    data[i] = f"{username} {numOfMoves}\n"
+                    break
 
-    # with open('games/chaseGame/chaseScores.txt', 'a') as file:
-    # file.writelines(data)
+    with open("games/chaseGame/chaseScores.txt", "a") as file:
+        file.writelines(data)
 
 
 # Running Code
@@ -282,17 +286,17 @@ def chaseGame(username):
     global botMovementRandomness
 
     asciiLogo()
-    customization()
+    customization(username)
     everythingRestart()
 
     while True:
         os.system("clear")
-        gameBoardLogic()
+        gameBoardLogic(username)
         printGameBoard()
         keyMove()
         os.system("clear")
         botMovement()
-        gameBoardLogic()
+        gameBoardLogic(username)
         if gameLose == "n":
             printGameBoard()
         elif gameLose == "y":

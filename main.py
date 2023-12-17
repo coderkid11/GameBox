@@ -67,7 +67,7 @@ def loginMenu():
             os.system("clear")
         elif ch == 2:
             login()
-            if loginSuccesful == True:
+            if loginSuccesful is True:
                 os.system("clear")
                 break
         elif ch == 3:
@@ -130,32 +130,37 @@ def pickGame():
         pass
 
 
-try:
-    os.system("clear")
-    slowAsciiLogo()
-    print("Welcome To GameBox!")
-    print(" ")
-    print("This is a developing service with games being coded every week!")
-    enterToContinue = input("Press ENTER to continue ")
-    os.system("clear")
-    loginMenu()
+# try:
+os.system("clear")
+slowAsciiLogo()
+print("Welcome To GameBox!")
+print(" ")
+print("This is a developing service with games being coded every week!")
+enterToContinue = input("Press ENTER to continue ")
+os.system("clear")
+loginMenu()
 
-    while True:
+while True:
+    os.system("clear")
+    asciiLogo()
+    pickGame()
+    os.system("clear")
+    if input("Do you want to play another game? (y/n)? ") not in ("Y", "y"):
         os.system("clear")
         asciiLogo()
-        pickGame()
-        os.system("clear")
-        if input("Do you want to play another game? (y/n)? ") not in ("Y", "y"):
-            os.system("clear")
-            asciiLogo()
-            words = "Thanks for playing!"
-            for char in words:
-                time.sleep(0.1)
-                sys.stdout.write(char)
-                sys.stdout.flush()
-            print("")
-            break
-except:
-    os.system("clear")
-    print("There was an error. Please try again.")
-    print("Contact the developer if this keeps happening.")
+        words = "Thanks for playing!"
+        for char in words:
+            time.sleep(0.1)
+            sys.stdout.write(char)
+            sys.stdout.flush()
+        print("")
+        break
+
+
+# except:
+# os.system("clear")
+# print("There was an error. Please try again.")
+# print("Contact the developer if this keeps happening.")
+
+# print("The error was:")
+# print(Exception)
