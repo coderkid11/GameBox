@@ -83,6 +83,7 @@ def loginMenu():
 
 def pickGame():
   print("Hello " + username + "!")
+  print()
   print("Pick your game from the list below:")
   
   print("1. Rock Paper Scissors")
@@ -121,30 +122,36 @@ def pickGame():
     time.sleep(0.5)
     print("Here we goooooooooo!")
     time.sleep(0.5)
-    chaseGame()
+    chaseGame(username)
   else:
     pass
 
-slowAsciiLogo()
-print("Welcome To GameBox!")
-print(" ")
-print("This is a developing service with games being coded every week!")
-enterToContinue = input("Press ENTER to continue ")
-os.system('clear')
-loginMenu()
-
-while True:
+try:
   os.system('clear')
-  asciiLogo()
-  pickGame()
+  slowAsciiLogo()
+  print("Welcome To GameBox!")
+  print(" ")
+  print("This is a developing service with games being coded every week!")
+  enterToContinue = input("Press ENTER to continue ")
   os.system('clear')
-  if input('Do you want to play another game? (y/n)? ') not in ('Y','y'):
+  loginMenu()
+  
+  while True:
     os.system('clear')
     asciiLogo()
-    words = ("Thanks for playing!")
-    for char in words:
-      time.sleep(0.1)
-      sys.stdout.write(char)
-      sys.stdout.flush()
-    print("")
-    break
+    pickGame()
+    os.system('clear')
+    if input('Do you want to play another game? (y/n)? ') not in ('Y','y'):
+      os.system('clear')
+      asciiLogo()
+      words = ("Thanks for playing!")
+      for char in words:
+        time.sleep(0.1)
+        sys.stdout.write(char)
+        sys.stdout.flush()
+      print("")
+      break
+except:
+  os.system('clear')
+  print('There was an error. Please try again.')
+  print('Contact the developer if this keeps happening.')
