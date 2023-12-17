@@ -14,14 +14,14 @@ def signup():
     conf_pwd = getpass.getpass('Confirm password: ')
 
     if conf_pwd == pwd:
-        with open('credentials.txt', 'a') as file:
+        with open('~/gameBox/credentials.txt', 'a') as file:
             file.write(username + '\n')
             file.write(pwd + '\n')
 
-        with open('games/chaseGame/chaseScores.txt', 'a') as file:
+        with open('~/gameBox/games/chaseGame/chaseScores.txt', 'a') as file:
             file.write(username + ',0' + '\n')
 
-        with open('games/rockPaperScissors/rockPaperScissorsScores.txt', 'a') as file:
+        with open('~/gameBox/games/rockPaperScissors/rockPaperScissorsScores.txt', 'a') as file:
             file.write(username + ',0' + '\n')
 
         print('You have registered successfully!')
@@ -89,7 +89,7 @@ def pickGame():
     print()
     print("Pick your game from the list below:")
 
-    print("1.  Rock Paper Scissors")
+    print("1. Rock Paper Scissors")
     print("2. Chase Game")
     print("3. N/A")
     print("4. N/A")
@@ -145,6 +145,7 @@ try:
         asciiLogo()
         pickGame()
         os.system('clear')
+        asciiLogo()
         if input('Do you want to play another game? (y/n)? ') not in ('Y', 'y'):
             os.system('clear')
             asciiLogo()
@@ -154,6 +155,8 @@ try:
                 sys.stdout.write(char)
                 sys.stdout.flush()
             print("")
+            time.sleep(1)
+            os.system('clear')
             break
 except:
     os.system('clear')

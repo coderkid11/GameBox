@@ -1,2 +1,4 @@
 KodingOnion,
 victoriaportnoi,0
+kodingonion,0
+jakeportnoi,0
