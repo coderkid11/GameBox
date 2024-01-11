@@ -1,6 +1,3 @@
 KodingOnion,0
 victoriaportnoi,0
 jakeportnoi,0
-KodingOnion,0
-victoriaportnoi,0
-jakeportnoi,0
